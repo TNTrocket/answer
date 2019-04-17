@@ -49,5 +49,6 @@ export default {
 }
 page {
   height: 100%;
+  font-family:MicrosoftYaHei;
 }
 </style>
