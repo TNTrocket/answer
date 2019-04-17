@@ -1,0 +1,14 @@
+{
+  "pages": [
+    "pages/index/main",
+    "pages/activity/main",
+    "pages/waitForAnswer/main",
+    "pages/answer/main"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#ffcc66",
+    "navigationBarTitleText": "滴答擂台",
+    "navigationBarTextStyle": "black"
+  }
+}

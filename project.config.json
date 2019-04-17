@@ -1,0 +1,59 @@
+{
+	"description": "项目配置文件。",
+	"setting": {
+		"urlCheck": false,
+		"es6": false,
+		"postcss": true,
+		"minified": true,
+		"newFeature": true,
+		"autoAudits": false
+	},
+	"miniprogramRoot": "dist/wx/",
+	"compileType": "miniprogram",
+	"appid": "wx34345c68ceeb6747",
+	"projectname": "project",
+	"condition": {
+		"search": {
+			"current": -1,
+			"list": []
+		},
+		"conversation": {
+			"current": -1,
+			"list": []
+		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
+		"game": {
+			"currentL": -1,
+			"list": []
+		},
+		"miniprogram": {
+			"current": 2,
+			"list": [
+				{
+					"id": -1,
+					"name": "tt",
+					"pathName": "pages/activity/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "tt",
+					"pathName": "pages/waitForAnswer/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 2,
+					"name": "answer",
+					"pathName": "pages/answer/main",
+					"query": "activityId=540000199206201841&orderNo=1",
+					"scene": null
+				}
+			]
+		}
+	}
+}
