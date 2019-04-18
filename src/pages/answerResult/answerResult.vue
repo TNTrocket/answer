@@ -1,12 +1,21 @@
 <template>
   <div class="answerResult">
     <SpinnerLoading :loading="loading"></SpinnerLoading>
+    <ResultAlert
+      :mode="resultType"
+      v-if="!isNeedWait && showModal"
+      :resultData="modalData"
+      @closeModal="modalClose"
+    ></ResultAlert>
     <div class="answerHeaderContent">
       <div class="header">
         <span>第{{orderNo}}轮</span>
         <span class="orderNoName">第二轮标题</span>
       </div>
-      <div class="headerTips">
+      <div
+        class="headerTips"
+        v-if="isNeedWait"
+      >
         <div class="right"></div>
         <div class="r_txt">提交成功</div>
         <div class="r_desc">比赛结果即将公布，请耐心等候</div>
@@ -14,7 +23,10 @@
       </div>
     </div>
     <div class="answerDetail">
-      <div class="detailTitle">
+      <div
+        class="detailTitle"
+        v-if="isNeedWait"
+      >
         答题情况
       </div>
       <div class="d_content">
@@ -66,7 +78,10 @@
             建议先去巩固一下基础知识，继续加油哦
           </div>
         </div>
-        <div class="d_f_btn">
+        <div
+          class="d_f_btn"
+          @click="logoutToAnswer"
+        >
           退出答题
         </div>
       </div>
@@ -77,6 +92,8 @@
 import Api from '@/utils/api'
 import utils from '@/utils/index'
 import SpinnerLoading from '@/components/spinner/index.vue'
+import ResultAlert from './resultAlert.vue'
+
 export default {
   data() {
     return {
@@ -84,8 +101,16 @@ export default {
       orderNo: '',
       detailObj: {},
       countDownStr: '',
-      loading: true
+      loading: true,
+      resultType: '', // 判断是否晋级，根据返回的status
+      isNeedWait: false, // 是否需要等待时间
+      modalData: {}, //  晋级或失败的弹窗数据
+      showModal: false
     }
+  },
+  components: {
+    SpinnerLoading,
+    ResultAlert
   },
   onLoad(options) {
     this.activityId = options.activityId
@@ -94,19 +119,42 @@ export default {
   onShow() {
     this.getDetail()
   },
+  onHide() {
+    clearInterval(this.timer)
+  },
+  onUnload() {
+    clearInterval(this.timer)
+  },
   methods: {
+    logoutToAnswer() {
+      wx.redirectTo({
+        url: `/pages/waitForAnswer/main?activityId=${this.activtyId}&orderNo=${
+          this.orderNo
+        }`
+      })
+    },
+    modalClose() {
+      this.showModal = false
+    },
     getDetail() {
       Api.post('activityContro/getUserRoundsAnswerList')
         .then(data => {
           this.detailObj = data
           this.loading = false
+          if (this.detailObj.actUser) {
+            this.resultType =
+              this.detailObj.actUser.status == 1 ? 'success' : 'failure'
+          }
           if (this.detailObj.limitTime) {
+            this.showModal = false
+            this.isNeedWait = true
             clearInterval(this.timer)
             this.countDownStr = utils.formatToMin(
               Number(this.detailObj.limitTime)
             )
             this.timer = setInterval(() => {
               if (this.detailObj.limitTime <= 0) {
+                this.getDetail()
                 clearInterval(this.timer)
                 return
               }
@@ -115,6 +163,13 @@ export default {
                 Number(this.detailObj.limitTime)
               )
             }, 1000)
+          } else {
+            this.modalData = {
+              score: this.detailObj.score,
+              rankNo: this.detailObj.actUser.rankNo
+            }
+            this.isNeedWait = false
+            this.showModal = true
           }
         })
         .catch(() => {

@@ -72,7 +72,7 @@
 import Api from '@/utils/api'
 import utils from '@/utils/index'
 import SpinnerLoading from '@/components/spinner/index.vue'
-import AnswerCard from '@/components/answer/card.vue'
+import AnswerCard from './card.vue'
 import AlertModal from '@/components/alert/index.vue'
 export default {
   data() {
