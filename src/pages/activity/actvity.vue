@@ -138,7 +138,7 @@ export default {
     line-height: 82rpx;
     width: 228rpx;
     height: 82rpx;
-    background: url('../../../static/images/s_btn.png');
+    background: url('../../../assets/images/s_btn.png');
     background-size: 100% 100%;
   }
 }

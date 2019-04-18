@@ -154,6 +154,7 @@ export default {
             )
             this.timer = setInterval(() => {
               if (this.detailObj.limitTime <= 0) {
+                // 等待时间结束，递归本身查询是否晋级
                 this.getDetail()
                 clearInterval(this.timer)
                 return
@@ -202,7 +203,7 @@ export default {
       .right {
         width: 128rpx;
         height: 128rpx;
-        background: url('../../../static/images/right.png');
+        background: url('../../../assets/images/right.png');
         background-size: 100% 100%;
       }
       .r_txt {
@@ -256,7 +257,7 @@ export default {
         justify-content: center;
         align-items: center;
         flex-direction: column;
-        background: url('../../../static/images/bigOpt.png');
+        background: url('../../../assets/images/bigOpt.png');
         background-size: cover;
         .d_number {
           color: #ad1313;
@@ -269,7 +270,7 @@ export default {
       width: 569rpx;
       height: 156rpx;
       margin: 32rpx auto 0 auto;
-      background: url('../../../static/images/questionBg.png');
+      background: url('../../../assets/images/questionBg.png');
       background-size: cover;
       display: flex;
       flex-direction: column;
@@ -327,7 +328,7 @@ export default {
             .icon {
               width: 40rpx;
               height: 40rpx;
-              background: url('../../../static/images/coin.png');
+              background: url('../../../assets/images/coin.png');
               background-size: cover;
               margin-right: 20rpx;
             }
@@ -339,7 +340,7 @@ export default {
             .icon {
               width: 63rpx;
               height: 54rpx;
-              background: url('../../../static/images/tips1.png');
+              background: url('../../../assets/images/tips1.png');
               background-size: cover;
               margin-right: 20rpx;
             }
@@ -356,7 +357,7 @@ export default {
       .d_f_btn {
         width: 408rpx;
         height: 80rpx;
-        background: url('../../../static/images/lbtn.png');
+        background: url('../../../assets/images/lbtn.png');
         background-size: cover;
         margin: 20rpx auto 0 auto;
         color: #fff;

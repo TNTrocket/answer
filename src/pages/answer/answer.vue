@@ -311,7 +311,7 @@ export default {
 .answerContent {
   width: 100%;
   height: 100%;
-  background: url('../../../static/images/bg.png');
+  background: url('../../../assets/images/bg.png');
   background-size: cover;
   overflow-y: auto;
   .header {
@@ -351,7 +351,7 @@ export default {
       margin-left: 40rpx;
       width: 42rpx;
       height: 42rpx;
-      background: url('../../../static/images/tips2.png');
+      background: url('../../../assets/images/tips2.png');
       background-size: cover;
     }
   }
@@ -364,7 +364,7 @@ export default {
         line-height: 178rpx;
         font-weight: bold;
         margin: 0 auto;
-        background: url('../../../static/images/questionBg.png');
+        background: url('../../../assets/images/questionBg.png');
         background-size: cover;
         text-align: center;
         font-size: 44rpx;
@@ -388,7 +388,7 @@ export default {
           width: 96rpx;
           height: 92rpx;
           line-height: 92rpx;
-          background: url('../../../static/images/aitem.png');
+          background: url('../../../assets/images/aitem.png');
           background-size: cover;
           text-align: center;
           font-size: 44rpx;
@@ -407,7 +407,7 @@ export default {
           width: 96rpx;
           height: 92rpx;
           line-height: 92rpx;
-          background: url('../../../static/images/aoption.png');
+          background: url('../../../assets/images/aoption.png');
           background-size: cover;
           text-align: center;
           font-size: 34rpx;
@@ -438,7 +438,7 @@ export default {
     width: 266rpx;
     height: 80rpx;
     line-height: 80rpx;
-    background: url('../../../static/images/submitBg.png');
+    background: url('../../../assets/images/submitBg.png');
     background-size: 100% 100%;
     font-size: 30rpx;
     font-weight: 400;

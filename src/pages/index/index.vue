@@ -27,6 +27,7 @@
               class="inPress"
               :style="{width: '10%'}"
             ></div>
+            <div class="barTxt">20/100</div>
           </div>
         </div>
       </div>
@@ -215,9 +216,10 @@ export default {
       margin-top: 40rpx;
       margin-left: 20rpx;
       width: 346rpx;
-      height: 23rpx;
+      height: 26rpx;
       background: rgba(210, 210, 210, 1);
       border-radius: 11rpx;
+      position: relative;
       .inPress {
         background: rgba(224, 111, 0, 1);
         height: 100%;
@@ -225,6 +227,16 @@ export default {
         transition: width 1s;
         border-top-left-radius: 11rpx;
         border-bottom-left-radius: 11rpx;
+      }
+      .barTxt{
+        position: absolute;
+        z-index: 3;
+        left: 50%;
+        top: 0;
+        transform: translateX(-50%);
+        color: #fff;
+        line-height: 1;
+        font-size: 24rpx;
       }
     }
   }

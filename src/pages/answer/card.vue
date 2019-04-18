@@ -66,7 +66,7 @@ export default {
 .cardClose {
   width: 64rpx;
   height: 64rpx;
-  background: url('../../../static/images/close.png');
+  background: url('../../../assets/images/close.png');
   background-size: cover;
   position: absolute;
   top: 30rpx;
@@ -79,7 +79,7 @@ export default {
   line-height: 80rpx;
   width: 409rpx;
   height: 80rpx;
-  background: url('../../../static/images/lbtn.png');
+  background: url('../../../assets/images/lbtn.png');
   background-size: cover;
 }
 .answeCard {
@@ -95,7 +95,7 @@ export default {
   padding-top: 34rpx;
   width: 100%;
   height: 100%;
-  background: url('../../../static/images/bg.png');
+  background: url('../../../assets/images/bg.png');
   background-size: cover;
   overflow-y: auto;
   .title {

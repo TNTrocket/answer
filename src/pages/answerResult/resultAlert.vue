@@ -71,14 +71,14 @@ export default {
   .failure {
     width: 602rpx;
     height: 474rpx !important;
-    background: url('../../../static/images/mfail.png') !important;
+    background: url('../../../assets/images/mfail.png') !important;
     background-size: cover !important;
   }
   .success,
   .failure {
     width: 602rpx;
     height: 590rpx;
-    background: url('../../../static/images/s-modal.png');
+    background: url('../../../assets/images/s-modal.png');
     background-size: cover;
     position: relative;
     .successContent,
@@ -108,7 +108,7 @@ export default {
       .s_btn {
         width: 408rpx;
         height: 80rpx;
-        background: url('../../../static/images/lbtn.png');
+        background: url('../../../assets/images/lbtn.png');
         background-size: cover;
         margin: 0 auto;
         color: #fff;

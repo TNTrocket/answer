@@ -40,6 +40,7 @@
           {{activityStatusTxt[currentTurn.status] || '未开始'}}
           <div class="triangle"></div>
         </div>
+        <!-- todo: 判断是否晋级 -->
         <div class="riseStatus"></div>
       </div>
     </div>
@@ -69,7 +70,7 @@ export default {
       activityId: '',
       loading: true,
       turnList: [],
-      currentNo: 1,
+      currentNo: 1, // 当前轮次
       turnListTitle: ['第一轮', '第二轮', '第三轮', '第四轮'],
       activityStatusTxt: { '0': '未开始', '1': '正在进行', '2': '已结束' }
     }
@@ -83,11 +84,15 @@ export default {
       return this.turnList[this.currentNo - 1] || {}
     },
     startTimeStr: function() {
-      let startTime = this.currentTurn.startTime ? Number(this.currentTurn.startTime.time) : ''
+      let startTime = this.currentTurn.startTime
+        ? Number(this.currentTurn.startTime.time)
+        : ''
       return utils.formatTime(new Date(startTime))
     },
     endTimeStr: function() {
-      let endTime = this.currentTurn.endTime? Number(this.currentTurn.endTime.time) : ''
+      let endTime = this.currentTurn.endTime
+        ? Number(this.currentTurn.endTime.time)
+        : ''
       return utils.formatTime(new Date(endTime))
     }
   },
@@ -119,6 +124,7 @@ export default {
         this.turnList = data || []
         for (let item of this.turnList) {
           if (item.status == 0 || item.status == 1) {
+            // 每次进来轮次都会查询最近一次的轮次，并开启定时器，监听是否开始，结束
             this.currentNo = item.orderNo
             this.countTime(item)
             break
@@ -170,7 +176,7 @@ export default {
 .turnContent {
   width: 100%;
   height: 100%;
-  background: url('../../../static/images/bg.png');
+  background: url('../../../assets/images/bg.png');
   background-size: cover;
   overflow-y: auto;
 }
@@ -187,7 +193,7 @@ export default {
     .icon {
       width: 113rpx;
       height: 113rpx;
-      background: url('../../../static/images/shareIcon.png');
+      background: url('../../../assets/images/shareIcon.png');
       background-size: 100% 100%;
       margin-bottom: 10rpx;
     }
@@ -202,7 +208,7 @@ export default {
     .icon {
       width: 155rpx;
       height: 130rpx;
-      background: url('../../../static/images/top.png');
+      background: url('../../../assets/images/top.png');
       background-size: 100% 100%;
       margin-bottom: 10rpx;
     }
@@ -212,7 +218,7 @@ export default {
   margin: 0 146rpx 0 166rpx;
   width: 438rpx;
   height: 408rpx;
-  background: url('../../../static/images/bigOpt.png');
+  background: url('../../../assets/images/bigOpt.png');
   background-size: 100% 100%;
   position: relative;
   display: flex;
@@ -229,10 +235,10 @@ export default {
 }
 .answerRule {
   margin: 40rpx 30rpx 58rpx 82rpx;
-  font-size:30rpx;
+  font-size: 30rpx;
 }
 .answerCondition {
-  background: url('../../../static/images/lbtn.png');
+  background: url('../../../assets/images/lbtn.png');
   background-size: 100% 100%;
   width: 410rpx;
   height: 82rpx;
@@ -272,7 +278,7 @@ export default {
   }
 }
 .riseStatus {
-  background: url('../../../static/images/apIcon.png');
+  background: url('../../../assets/images/apIcon.png');
   background-size: 100% 100%;
   width: 75rpx;
   height: 172rpx;

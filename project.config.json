@@ -30,46 +30,32 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 5,
+			"current": 3,
 			"list": [
 				{
-					"id": -1,
-					"name": "tt",
+					"id": 0,
+					"name": "活动详情",
 					"pathName": "pages/activity/main",
 					"query": "",
 					"scene": null
 				},
 				{
-					"id": -1,
-					"name": "tt",
+					"id": 1,
+					"name": "活动轮次",
 					"pathName": "pages/waitForAnswer/main",
 					"query": "",
 					"scene": null
 				},
 				{
 					"id": 2,
-					"name": "answer",
+					"name": "答题流程",
 					"pathName": "pages/answer/main",
 					"query": "activityId=540000199206201841&orderNo=1",
 					"scene": null
 				},
 				{
-					"id": -1,
-					"name": "answer",
-					"pathName": "pages/waitForAnswer/main",
-					"query": "activityId=540000199206201841&orderNo=1",
-					"scene": null
-				},
-				{
-					"id": 4,
-					"name": "answer",
-					"pathName": "pages/answer/main",
-					"query": "activityId=2",
-					"scene": null
-				},
-				{
-					"id": 5,
-					"name": "result",
+					"id": 3,
+					"name": "答题情况",
 					"pathName": "pages/answerResult/main",
 					"query": "orderNo=2",
 					"scene": null
