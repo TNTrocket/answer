@@ -30,7 +30,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 4,
+			"current": 5,
 			"list": [
 				{
 					"id": -1,
@@ -65,6 +65,13 @@
 					"name": "answer",
 					"pathName": "pages/answer/main",
 					"query": "activityId=2",
+					"scene": null
+				},
+				{
+					"id": 5,
+					"name": "result",
+					"pathName": "pages/answerResult/main",
+					"query": "orderNo=2",
 					"scene": null
 				}
 			]

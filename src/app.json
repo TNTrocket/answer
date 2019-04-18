@@ -3,7 +3,8 @@
     "pages/index/main",
     "pages/activity/main",
     "pages/waitForAnswer/main",
-    "pages/answer/main"
+    "pages/answer/main",
+    "pages/answerResult/main"
   ],
   "window": {
     "backgroundTextStyle": "light",

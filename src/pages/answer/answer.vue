@@ -155,6 +155,12 @@ export default {
     finalSumit() {
       // todo: 提交所有作答的答案
       console.log('finalSubmit')
+      clearInterval(this.timer)
+      wx.redirectTo({
+        url: `/pages/answerResult/main?activityId=${this.activtyId}&orderNo=${
+          this.orderNo
+        }`
+      })
     },
     // 自定义弹窗
     customAlert(alertObj) {
@@ -263,6 +269,10 @@ export default {
         .catch(() => {
           this.loading = false
         })
+    },
+    // 页面卸载时关定时器
+    onUnload() {
+      clearInterval(this.timer)
     },
     // 倒计时到了的弹窗
     countDownModal() {
