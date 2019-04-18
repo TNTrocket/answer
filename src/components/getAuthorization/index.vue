@@ -21,7 +21,7 @@
 <script>
 import Api from '@/utils/api'
 import { mapGetters, mapState, mapActions } from 'vuex'
-
+// 用户强制授权，如果用户数据里没有nickName就绑定为没有授权
 export default {
   methods: {
     bindUserInfo(e) {

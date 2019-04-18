@@ -188,6 +188,7 @@ export default {
     },
     // 收集所有答过的答案
     collectAllAnswer() {
+      // todo: 具体收集到答案数据结构，得按实际接口调整
       this.hasAnswerArr[this.currentQuestion] = {
         idNo: this.currentQuestion,
         answer: this.inputAnswer

@@ -1,6 +1,9 @@
 import store from '@/store/index'
 import config from './config'
-
+/**
+ * @description  第一次请求前都会去兑换openid, 接着获取用户信息，并把所得到都数据缓存于 store， 接口状态则缓存于promise
+ *  请求会默认带上当前用户的openid，可以不用传
+ */
 
 const path = config.path
 // opendid promise
