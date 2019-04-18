@@ -26,12 +26,17 @@
       <div
         class="signUp"
         @click="goSignUp"
+        v-if="!activityDetail.isAccess"
       >
         <div class="btn">立即报名</div>
       </div>
-      <!-- <div class="enter" @click="enterActivity">
-          <div class="btn">进入活动</div>
-        </div> -->
+      <div
+        class="enter"
+        @click="enterActivity"
+        v-if="activityDetail.isAccess"
+      >
+        <div class="btn">进入活动</div>
+      </div>
     </div>
   </div>
 </template>
@@ -46,6 +51,8 @@ export default {
   },
   onLoad(option) {
     this.activityId = option.activityId
+  },
+  onShow() {
     this.getDetailData()
   },
   methods: {
@@ -131,7 +138,7 @@ export default {
     line-height: 82rpx;
     width: 228rpx;
     height: 82rpx;
-    background: url('@{images}/dbtn.png');
+    background: url('../../../static/images/s_btn.png');
     background-size: 100% 100%;
   }
 }

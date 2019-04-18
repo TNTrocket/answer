@@ -30,7 +30,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 2,
+			"current": 4,
 			"list": [
 				{
 					"id": -1,
@@ -51,6 +51,20 @@
 					"name": "answer",
 					"pathName": "pages/answer/main",
 					"query": "activityId=540000199206201841&orderNo=1",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "answer",
+					"pathName": "pages/waitForAnswer/main",
+					"query": "activityId=540000199206201841&orderNo=1",
+					"scene": null
+				},
+				{
+					"id": 4,
+					"name": "answer",
+					"pathName": "pages/answer/main",
+					"query": "activityId=2",
 					"scene": null
 				}
 			]

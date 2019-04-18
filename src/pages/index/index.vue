@@ -16,7 +16,7 @@
           <div class="name">{{userInfo.nickName}}</div>
           <div class="coin">
             <div class="icon"></div>
-            <div class="number">300</div>
+            <div class="number">{{answerData.userObj.goldCoin}}</div>
           </div>
           <div class="present"></div>
         </div>

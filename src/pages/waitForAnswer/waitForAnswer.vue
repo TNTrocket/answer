@@ -44,7 +44,9 @@
       </div>
     </div>
     <div class="answerRule">
-      {{currentTurn.ruleContent}}
+      <text>
+        {{currentTurn.ruleContent}}
+      </text>
     </div>
     <div
       class="answerCondition"
@@ -81,11 +83,11 @@ export default {
       return this.turnList[this.currentNo - 1] || {}
     },
     startTimeStr: function() {
-      let startTime = this.currentTurn.startTime || ''
+      let startTime = this.currentTurn.startTime ? Number(this.currentTurn.startTime.time) : ''
       return utils.formatTime(new Date(startTime))
     },
     endTimeStr: function() {
-      let endTime = this.currentTurn.endTime || ''
+      let endTime = this.currentTurn.endTime? Number(this.currentTurn.endTime.time) : ''
       return utils.formatTime(new Date(endTime))
     }
   },
@@ -129,15 +131,15 @@ export default {
     },
     countTime(item) {
       clearInterval(this.timer)
-      let countDown = item.startTime
+      let countDown = Number(item.startTime.time)
       this.timer = setInterval(() => {
         countDown += 3000
         this.checkActivityStatus(item, countDown)
       }, 3000)
     },
     checkActivityStatus(activity, time) {
-      let startTime = activity.startTime
-      let endTime = activity.endTime
+      let startTime = Number(activity.startTime.time)
+      let endTime = Number(activity.endTime.time)
       let nowTime = new Date().getTime()
       if (startTime < nowTime && nowTime < endTime) {
         activity.status = '1'
@@ -226,7 +228,8 @@ export default {
   }
 }
 .answerRule {
-  margin: 40rpx 104rpx 58rpx 82rpx;
+  margin: 40rpx 30rpx 58rpx 82rpx;
+  font-size:30rpx;
 }
 .answerCondition {
   background: url('../../../static/images/lbtn.png');

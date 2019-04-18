@@ -25,7 +25,7 @@ export default {
   }
 }
 </script>
-<style lang="less">
+<style lang="less" scoped>
 .loading-spinner {
   position: fixed;
   top: 0;
