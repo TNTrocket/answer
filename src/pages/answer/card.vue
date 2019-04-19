@@ -22,8 +22,9 @@
               {{index + 1}}
             </div>
           </li>
-          <li></li>
-          <li></li>
+          <li class="empty"></li>
+          <li class="empty"></li>
+          <li class="empty"></li>
         </ul>
         <div
           class="submitBtn"
@@ -114,6 +115,7 @@ export default {
       width: 25%;
       display: flex;
       justify-content: center;
+      align-items: center;
       .quan {
         width: 76rpx;
         height: 76rpx;
@@ -129,6 +131,9 @@ export default {
           background: rgba(225, 111, 0, 1);
           color: #fff;
         }
+      }
+      &.empty{
+        // width: 0;
       }
     }
   }

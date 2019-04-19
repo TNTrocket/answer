@@ -87,7 +87,9 @@ import SpinnerLoading from '@/components/spinner/index.vue'
 export default {
   data() {
     return {
-      answerData: {},
+      answerData: {
+        userObj: {}
+      },
       loading: true,
       activityList: [],
       indicatorDots: true,
@@ -103,7 +105,7 @@ export default {
     Auth,
     SpinnerLoading
   },
-  created() {
+  onLoad() {
     this.getAnswerData()
     this.getActivityList()
   },

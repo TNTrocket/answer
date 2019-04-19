@@ -57,12 +57,12 @@
     </div>
     <div
       class="answerCondition"
-      v-if="currentTurn.status == 2"
+      v-if="currentTurn.status == 2 && currentTurn.isSubmit"
       @click="viewAnswerResult"
     >答题情况</div>
     <div
       class="answerCondition"
-      v-if="currentTurn.status == 0 || currentTurn.status == 1"
+      v-if="currentTurn.status == 1 && !currentTurn.isSubmit"
       @click="enterTesting"
     >开始答题</div>
   </div>

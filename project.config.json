@@ -50,7 +50,7 @@
 					"id": 2,
 					"name": "答题流程",
 					"pathName": "pages/answer/main",
-					"query": "activityId=540000199206201841&orderNo=1",
+					"query": "activityId=2&orderNo=1",
 					"scene": null
 				},
 				{

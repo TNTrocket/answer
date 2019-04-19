@@ -1,6 +1,7 @@
 <template>
   <div class="answerResult">
     <SpinnerLoading :loading="loading"></SpinnerLoading>
+    <AlertModal></AlertModal>
     <ResultAlert
       :mode="resultType"
       v-if="!isNeedWait && showModal"
@@ -10,7 +11,7 @@
     <div class="answerHeaderContent">
       <div class="header">
         <span>第{{orderNo}}轮</span>
-        <span class="orderNoName">第二轮标题</span>
+        <span class="orderNoName">{{detailObj.roundObj.name}}</span>
       </div>
       <div
         class="headerTips"
@@ -32,11 +33,11 @@
       <div class="d_content">
         <div class="d_time">
           <div>用时</div>
-          <div class="d_txt">{{detailObj.ansTime}}</div>
+          <div class="d_txt">{{detailObj.actUser.ansTime}}</div>
         </div>
         <div class="d_score">
           <div>得分</div>
-          <div class="d_number">{{detailObj.score}}</div>
+          <div class="d_number">{{detailObj.actUser.score}}</div>
         </div>
         <div class="d_rate">
           <div>正确率</div>
@@ -55,7 +56,7 @@
           >
             <div
               class="quan"
-              :class="{orange: item.status == 0, green: item.status == 1}"
+              :class="{orange: item.status == 1, green: item.status == 0}"
             >{{item.orderNo}}</div>
           </li>
           <li class="empty"></li>
@@ -93,17 +94,18 @@ import Api from '@/utils/api'
 import utils from '@/utils/index'
 import SpinnerLoading from '@/components/spinner/index.vue'
 import ResultAlert from './resultAlert.vue'
+import AlertModal from '@/components/alert/index.vue'
 
 export default {
   data() {
     return {
       activityId: '',
       orderNo: '',
-      detailObj: {},
+      detailObj: { actUser: {}, roundObj:{} },
       countDownStr: '',
       loading: true,
       resultType: '', // 判断是否晋级，根据返回的status
-      isNeedWait: false, // 是否需要等待时间
+      isNeedWait: false, // 是否需要等待时间,需要等待时间证明是提前交卷
       modalData: {}, //  晋级或失败的弹窗数据
       showModal: false
     }
@@ -142,8 +144,19 @@ export default {
         orderNo: this.orderNo
       })
         .then(data => {
-          this.detailObj = data
           this.loading = false
+          let isAccess = data.isAccess
+          if (!isAccess) {
+            this.$emit('alert:show', {
+              content: '你没有参加本轮比赛',
+              okText: '确定',
+              okCallback: () => {
+                wx.navigateBack()
+              }
+            })
+            return
+          }
+          this.detailObj = data
           if (this.detailObj.actUser) {
             this.resultType =
               this.detailObj.actUser.status == 1 ? 'success' : 'failure'

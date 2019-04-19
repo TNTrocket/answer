@@ -27,8 +27,10 @@
     </div>
     <div class="quenstionContent">
       <div class="topic">
-        <div class="titleBg">{{currentQuestionObj.question}}</div>
-        <div class="t_tips">请接诗词的下一句</div>
+        <div class="titleBg">
+          <div class="t_titleTxt"> {{currentQuestionObj.question}}</div>
+        </div>
+        <div class="t_tips">请接诗词的{{currentQuestionObj.ansPos == 1 ? '下一句' : '上一句'}}</div>
       </div>
       <div class="useInput">
         <ul>
@@ -86,7 +88,8 @@ export default {
       inputAnswer: '', // 展示的输入
       hasAnswerArr: [], // 收集每次作答的输入
       loading: true,
-      showCard: false
+      showCard: false,
+      waitTime: 0 // 总时间
     }
   },
   components: {
@@ -115,7 +118,9 @@ export default {
       return temp
     },
     optionList: function() {
-      let options = this.currentQuestionObj.optionList || []
+      let options = this.currentQuestionObj.answerArray
+        ? this.currentQuestionObj.answerArray[0]
+        : []
       options = options.map(item => {
         return { txt: item }
       })
@@ -125,7 +130,7 @@ export default {
   watch: {
     currentQuestion: function(value) {
       this.inputAnswer = this.hasAnswerArr[this.currentQuestion]
-        ? this.hasAnswerArr[this.currentQuestion].answer
+        ? this.hasAnswerArr[this.currentQuestion].userAnswer
         : ''
     }
   },
@@ -147,20 +152,48 @@ export default {
         okText: '提交答卷',
         cancelText: '暂不提交',
         onSure: () => {
-          this.finalSumit()
+          this.finalSubmit()
         },
         onCancel: () => {}
       })
     },
-    finalSumit() {
-      // todo: 提交所有作答的答案
-      console.log('finalSubmit')
-      clearInterval(this.timer)
-      wx.redirectTo({
-        url: `/pages/answerResult/main?activityId=${this.activityId}&orderNo=${
-          this.orderNo
-        }`
+    finalSubmit() {
+      wx.showLoading({
+        title: '加载中',
+        mask: true
       })
+      // 过滤没做的题
+      let sAnswer = this.hasAnswerArr
+        .map(item => {
+          let userAnswer = item.userAnswer.replace(' ', '')
+          if (userAnswer.length === item.rLength) {
+            return {
+              testId: this.currentQuestionObj.id,
+              userAnswer: this.inputAnswer
+            }
+          }
+        })
+        .filter(item => {
+          return item
+        })
+      Api.post('activityContro/submitUserAnswer', {
+        activityId: this.activityId,
+        orderNo: this.orderNo,
+        viaTime: this.waitTime - this.limitTime,
+        userAnswers: JSON.stringify(sAnswer)
+      })
+        .then(() => {
+          clearInterval(this.timer)
+          wx.hideLoading()
+          wx.redirectTo({
+            url: `/pages/answerResult/main?activityId=${
+              this.activityId
+            }&orderNo=${this.orderNo}`
+          })
+        })
+        .catch(() => {
+          wx.hideLoading()
+        })
     },
     // 自定义弹窗
     customAlert(alertObj) {
@@ -194,10 +227,10 @@ export default {
     },
     // 收集所有答过的答案
     collectAllAnswer() {
-      // todo: 具体收集到答案数据结构，得按实际接口调整
       this.hasAnswerArr[this.currentQuestion] = {
-        idNo: this.currentQuestion,
-        answer: this.inputAnswer
+        testId: this.currentQuestionObj.id,
+        userAnswer: this.inputAnswer,
+        rLength: this.currentQuestionObj.answer.length // 正确答案的长度，用于过滤
       }
     },
     // 上一题
@@ -248,6 +281,7 @@ export default {
       } else {
         this.checkOption(this.inputAnswer[index])
         this.inputAnswer = this.replaceString(this.inputAnswer, index)
+        this.collectAllAnswer()
       }
     },
     viewAnswerRecord() {
@@ -260,8 +294,9 @@ export default {
         activityId: this.activityId
       })
         .then(data => {
-          this.questionList = data.questionList || []
+          this.questionList = data.subjectList || []
           this.limitTime = data.limitTime || 0
+          this.waitTime = data.limitTime || 0
           this.limitTimeTxt = utils.formatToMin(this.limitTime)
           this.countDown()
           this.loading = false
@@ -279,9 +314,7 @@ export default {
       this.customAlert({
         content: '答题时间到，已自动提交答卷',
         okText: '我知道了',
-        onSure: () => {
-          this.finalSumit()
-        }
+        onSure: () => {}
       })
     },
     // 倒计时
@@ -291,6 +324,7 @@ export default {
         if (this.limitTime <= 0) {
           clearInterval(this.timer)
           this.countDownModal()
+          this.finalSubmit()
         } else {
           this.limitTime = this.limitTime - 1
           this.limitTimeTxt = utils.formatToMin(this.limitTime)
@@ -360,15 +394,21 @@ export default {
     .topic {
       .titleBg {
         width: 644rpx;
-        height: 178rpx;
-        line-height: 178rpx;
+        box-sizing: border-box;
+        min-height: 178rpx;
+        padding: 60rpx 100rpx;
         font-weight: bold;
         margin: 0 auto;
         background: url('../../../assets/images/questionBg.png');
-        background-size: cover;
-        text-align: center;
-        font-size: 44rpx;
-        color: rgba(132, 93, 50, 1);
+        background-size: 100% 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .t_titleTxt {
+          text-align: center;
+          font-size: 44rpx;
+          color: rgba(132, 93, 50, 1);
+        }
       }
       .t_tips {
         margin-top: 6rpx;
