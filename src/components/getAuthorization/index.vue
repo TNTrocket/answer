@@ -35,14 +35,12 @@ export default {
         })
       }
     },
-     ...mapActions(['setUserInfo'])
+    ...mapActions(['setUserInfo'])
   },
   computed: {
     ...mapGetters(['userInfo'])
   },
-  created() {
-    console.log('created')
-  },
+  created() {}
 }
 </script>
 <style lang="less" scoped>

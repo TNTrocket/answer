@@ -78,7 +78,7 @@ export default {
   data() {
     return {
       orderNo: 0, // 轮次
-      activtyId: '',
+      activityId: '',
       currentQuestion: 0, // 当前题目的下标
       questionList: [], // 题目list
       limitTime: 0, // 倒计时
@@ -131,7 +131,7 @@ export default {
   },
   onLoad(options) {
     this.orderNo = options.orderNo
-    this.activtyId = options.activtyId
+    this.activityId = options.activityId
     this.getQuestionList()
   },
   mounted() {},
@@ -157,7 +157,7 @@ export default {
       console.log('finalSubmit')
       clearInterval(this.timer)
       wx.redirectTo({
-        url: `/pages/answerResult/main?activityId=${this.activtyId}&orderNo=${
+        url: `/pages/answerResult/main?activityId=${this.activityId}&orderNo=${
           this.orderNo
         }`
       })
@@ -257,7 +257,7 @@ export default {
     getQuestionList() {
       Api.post('activityContro/getActivityRoundSubjectList', {
         orderNo: this.orderNo,
-        activtyId: this.activtyId
+        activityId: this.activityId
       })
         .then(data => {
           this.questionList = data.questionList || []

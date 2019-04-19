@@ -128,7 +128,7 @@ export default {
   methods: {
     logoutToAnswer() {
       wx.redirectTo({
-        url: `/pages/waitForAnswer/main?activityId=${this.activtyId}&orderNo=${
+        url: `/pages/waitForAnswer/main?activityId=${this.activityId}&orderNo=${
           this.orderNo
         }`
       })
@@ -137,7 +137,10 @@ export default {
       this.showModal = false
     },
     getDetail() {
-      Api.post('activityContro/getUserRoundsAnswerList')
+      Api.post('activityContro/getUserRoundsAnswerList', {
+        activityId: this.activityId,
+        orderNo: this.orderNo
+      })
         .then(data => {
           this.detailObj = data
           this.loading = false
@@ -166,7 +169,7 @@ export default {
             }, 1000)
           } else {
             this.modalData = {
-              score: this.detailObj.score,
+              score: this.detailObj.actUser.score,
               rankNo: this.detailObj.actUser.rankNo
             }
             this.isNeedWait = false
@@ -182,8 +185,12 @@ export default {
 </script>
 <style lang="less" scoped>
 .answerResult {
-  padding: 22rpx 0 0 0;
+  overflow-y: scroll;
+  height: 100%;
+  background: #f2f2f2;
   .answerHeaderContent {
+    padding: 22rpx 0 0 0;
+    background: #fff;
     .header {
       padding: 0 30rpx;
       font-size: 30rpx;
@@ -226,6 +233,7 @@ export default {
   }
   .answerDetail {
     padding-top: 26rpx;
+    background: #fff;
     .detailTitle {
       padding: 0 30rpx;
       font-size: 30rpx;

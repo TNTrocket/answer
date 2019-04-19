@@ -43,7 +43,7 @@
 					"id": 1,
 					"name": "活动轮次",
 					"pathName": "pages/waitForAnswer/main",
-					"query": "",
+					"query": "activityId=2",
 					"scene": null
 				},
 				{
@@ -57,7 +57,7 @@
 					"id": 3,
 					"name": "答题情况",
 					"pathName": "pages/answerResult/main",
-					"query": "orderNo=2",
+					"query": "activityId=2&orderNo=1",
 					"scene": null
 				}
 			]

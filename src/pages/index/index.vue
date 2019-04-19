@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <SpinnerLoading :loading="loading"/>
+    <SpinnerLoading :loading="loading" />
     <div class="personData">
       <div class="profile">
         <div class="avatarUrlBg"></div>
@@ -21,13 +21,13 @@
           <div class="present"></div>
         </div>
         <div>
-          <div class="level">进仕</div>
+          <div class="level">{{answerData.titleName}}</div>
           <div class="bar">
             <div
               class="inPress"
-              :style="{width: '10%'}"
+              :style="{width: (answerData.userObj.integralCount/100)*100 + '%'}"
             ></div>
-            <div class="barTxt">20/100</div>
+            <div class="barTxt">{{answerData.userObj.integralCount}}/100</div>
           </div>
         </div>
       </div>
@@ -126,7 +126,7 @@ export default {
         })
         .catch(e => {})
     },
-    goDetail(obj){
+    goDetail(obj) {
       wx.navigateTo({
         url: `/pages/activity/main?activityId=${obj.id}`
       })
@@ -228,7 +228,7 @@ export default {
         border-top-left-radius: 11rpx;
         border-bottom-left-radius: 11rpx;
       }
-      .barTxt{
+      .barTxt {
         position: absolute;
         z-index: 3;
         left: 50%;

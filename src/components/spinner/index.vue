@@ -20,9 +20,7 @@ export default {
     }
   },
   mounted() {},
-  created() {
-    console.log('loading', this.loading)
-  }
+  created() {}
 }
 </script>
 <style lang="less" scoped>

@@ -21,7 +21,7 @@
     </div>
     <div class="btns">
       <div class="shareFrends">
-        <button>邀请好友</button>
+        <button open-type="share">邀请好友</button>
       </div>
       <div
         class="signUp"
@@ -54,6 +54,14 @@ export default {
   },
   onShow() {
     this.getDetailData()
+  },
+  onShareAppMessage() {
+    // todo: 设置分享的配置
+    return {
+      title: '自定义转发标题',
+      path: '/page/user?id=123',
+      imageUrl: ''
+    }
   },
   methods: {
     getDetailData() {

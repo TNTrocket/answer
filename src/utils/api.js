@@ -41,12 +41,18 @@ function _fetch(url, params, config = {}) {
       }
     }).then(({
       success,
-      data
+      data,
+      desc
     }) => {
       console.log('fetch请求返回', url, params, data)
       if (success) {
         resolve(data)
       } else {
+        wx.showToast({
+          title: desc,
+          icon: 'none',
+          duration: 2000
+        })
         reject()
       }
     }).catch(() => {
@@ -68,12 +74,18 @@ function _post(url, params, config = {}) {
       }
     }).then(({
       success,
-      data
+      data,
+      desc
     }) => {
       console.log('post请求返回', url, params, data)
       if (success) {
         resolve(data)
       } else {
+        wx.showToast({
+          title: desc,
+          icon: 'none',
+          duration: 2000
+        })
         reject(data)
       }
     }).catch(() => {

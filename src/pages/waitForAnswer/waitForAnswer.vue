@@ -14,10 +14,13 @@
       </ul>
     </div>
     <div class="turnContentData">
-      <div class="shareFriends">
+      <button
+        class="shareFriends"
+        open-type="share"
+      >
         <div class="icon"></div>
         <div class="txt">邀请好友</div>
-      </div>
+      </button>
       <div
         class="rankTop"
         v-if="currentTurn.status == 2"
@@ -40,8 +43,11 @@
           {{activityStatusTxt[currentTurn.status] || '未开始'}}
           <div class="triangle"></div>
         </div>
-        <!-- todo: 判断是否晋级 -->
-        <div class="riseStatus"></div>
+        <!-- 判断是否晋级 -->
+        <div
+          class="riseStatus"
+          v-if="currentTurn.actUser && currentTurn.actUser.status == 1"
+        ></div>
       </div>
     </div>
     <div class="answerRule">
@@ -52,6 +58,7 @@
     <div
       class="answerCondition"
       v-if="currentTurn.status == 2"
+      @click="viewAnswerResult"
     >答题情况</div>
     <div
       class="answerCondition"
@@ -108,7 +115,22 @@ export default {
   onUnload() {
     clearInterval(this.timer)
   },
+  onShareAppMessage() {
+    // todo: 设置分享的配置
+    return {
+      title: '自定义转发标题',
+      path: '/page/user?id=123',
+      imageUrl: ''
+    }
+  },
   methods: {
+    viewAnswerResult() {
+      wx.navigateTo({
+        url: `/pages/answerResult/main?activityId=${this.activityId}&orderNo=${
+          this.currentNo
+        }`
+      })
+    },
     enterTesting() {
       wx.navigateTo({
         url: `/pages/answer/main?activityId=${
@@ -119,18 +141,24 @@ export default {
     getTurnData() {
       Api.post('activityContro/getActivityRoundsList', {
         activityId: this.activityId
-      }).then(data => {
-        this.loading = false
-        this.turnList = data || []
-        for (let item of this.turnList) {
-          if (item.status == 0 || item.status == 1) {
-            // 每次进来轮次都会查询最近一次的轮次，并开启定时器，监听是否开始，结束
-            this.currentNo = item.orderNo
-            this.countTime(item)
-            break
-          }
-        }
       })
+        .then(data => {
+          this.loading = false
+          this.turnList = data || []
+          for (let item of this.turnList) {
+            if (item.status == 0 || item.status == 1) {
+              // 每次进来轮次都会查询最近一次的轮次，并开启定时器，监听是否开始，结束
+              this.currentNo = item.orderNo
+              this.countTime(item)
+              break
+            }
+          }
+        })
+        .catch(() => {
+          setTimeout(() => {
+            wx.navigateBack()
+          }, 1000)
+        })
     },
     changeTurn(item) {
       this.currentNo = item.orderNo
@@ -138,18 +166,22 @@ export default {
     countTime(item) {
       clearInterval(this.timer)
       let countDown = Number(item.startTime.time)
+      this.checkActivityStatus(item, countDown)
       this.timer = setInterval(() => {
-        countDown += 3000
+        countDown += 2000
         this.checkActivityStatus(item, countDown)
-      }, 3000)
+      }, 2000)
     },
     checkActivityStatus(activity, time) {
       let startTime = Number(activity.startTime.time)
       let endTime = Number(activity.endTime.time)
       let nowTime = new Date().getTime()
       if (startTime < nowTime && nowTime < endTime) {
+        // 正在进行
         activity.status = '1'
       } else if (nowTime > endTime) {
+        // 已经结束
+        clearInterval(this.timer)
         activity.status = '2'
       }
     }
@@ -184,12 +216,18 @@ export default {
   padding-top: 190rpx;
   position: relative;
   　.shareFriends {
+    padding: 0;
     font-size: 28rpx;
     position: absolute;
     left: 58rpx;
     font-weight: 400;
     top: 20rpx;
+    background: transparent;
+    appearance: none;
     text-align: center;
+    &:after {
+      border: 0;
+    }
     .icon {
       width: 113rpx;
       height: 113rpx;
